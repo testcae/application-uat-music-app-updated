@@ -28,13 +28,13 @@ public class classes {
     public String getimageName() {
         return this.imageName;
     }
-    private String imageId;
+    private int imageId;
 
-    public void setimageId(String setValue) {
+    public void setimageId(int setValue) {
         this.imageId = setValue;
     }
 
-    public String getimageId() {
+    public int getimageId() {
         return this.imageId;
     }
 
@@ -52,7 +52,7 @@ public class classes {
         JSONObject jsonObject = (JSONObject) JSONValue.parseWithException(jsonString);
         this.imageUrl = (String) jsonObject.get("imageUrl"); 
         this.imageName = (String) jsonObject.get("imageName"); 
-        this.imageId = (String) jsonObject.get("imageId"); 
+        this.imageId = ((Long) jsonObject.get("imageId")).intValue(); 
 
     }
 
