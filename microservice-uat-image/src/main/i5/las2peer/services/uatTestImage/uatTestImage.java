@@ -107,7 +107,7 @@ public class uatTestImage extends RESTService {
   })
   @ApiOperation(value = "POST", notes = " ")
   public Response POST(String img) {
-   classes.Image payloadimgObject = new classes().new Image();
+   classes.image payloadimgObject = new classes().new image();
    try { 
        payloadimgObject.fromJSON(img);
    } catch (Exception e) { 
@@ -149,7 +149,7 @@ public class uatTestImage extends RESTService {
    */
   @GET
   @Path("/pathToExisting")
-  @Produces(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.TEXT_PLAIN)
   @Consumes(MediaType.TEXT_PLAIN)
   @ApiResponses(value = {
        @ApiResponse(code = HttpURLConnection.HTTP_OK, message = "fetch the cover of the song")

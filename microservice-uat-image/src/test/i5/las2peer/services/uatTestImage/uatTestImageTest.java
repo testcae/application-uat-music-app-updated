@@ -125,7 +125,7 @@ public class uatTestImageTest {
 
       c.setLogin(testAgent.getIdentifier(), testPass);
       ClientResponse result = c.sendRequest("GET", mainPath + "/pathToExisting", "",
-        MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON, new HashMap<String,String>());
+        MediaType.TEXT_PLAIN, MediaType.TEXT_PLAIN, new HashMap<String,String>());
       assertTrue(true); // change here
       System.out.println("Result of 'testexisting': " + result.getResponse().trim());
     } catch (Exception e) {

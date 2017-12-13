@@ -6,19 +6,10 @@ import org.json.simple.parser.ParseException;
 
 public class classes {
 
-    class Image {
+    class image {
 
-    public Image() {}
+    public image() {}
     
-    private int imageId;
-
-    public void setimageId(int setValue) {
-        this.imageId = setValue;
-    }
-
-    public int getimageId() {
-        return this.imageId;
-    }
     private String imageName;
 
     public void setimageName(String setValue) {
@@ -27,6 +18,15 @@ public class classes {
 
     public String getimageName() {
         return this.imageName;
+    }
+    private int imageId;
+
+    public void setimageId(int setValue) {
+        this.imageId = setValue;
+    }
+
+    public int getimageId() {
+        return this.imageId;
     }
     private String imageUrl;
 
@@ -41,8 +41,8 @@ public class classes {
     public JSONObject toJSON() {
 
         JSONObject jo = new JSONObject();
-        jo.put("imageId", this.imageId); 
         jo.put("imageName", this.imageName); 
+        jo.put("imageId", this.imageId); 
         jo.put("imageUrl", this.imageUrl); 
 
         return jo;
@@ -50,8 +50,8 @@ public class classes {
 
     public void fromJSON(String jsonString) throws ParseException {
         JSONObject jsonObject = (JSONObject) JSONValue.parseWithException(jsonString);
-        this.imageId = ((Long) jsonObject.get("imageId")).intValue(); 
         this.imageName = (String) jsonObject.get("imageName"); 
+        this.imageId = ((Long) jsonObject.get("imageId")).intValue(); 
         this.imageUrl = (String) jsonObject.get("imageUrl"); 
 
     }
