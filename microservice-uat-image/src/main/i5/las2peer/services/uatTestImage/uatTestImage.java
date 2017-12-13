@@ -134,7 +134,6 @@ public class uatTestImage extends RESTService {
       e.printStackTrace();
       return Response.status(HttpURLConnection.HTTP_INTERNAL_ERROR).entity(0).build();
     }
-;
   }
 
   /**
