@@ -92,20 +92,20 @@ public class uatTestImageTest {
 
   /**
    * 
-   * Test for the getImage method.
+   * Test for the POST method.
    * 
    */
   @Test
-  public void testgetImage() {
+  public void testPOST() {
     MiniClient c = new MiniClient();
     c.setAddressPort(HTTP_ADDRESS, HTTP_PORT);
     try {
-
+      JSONObject img = new JSONObject();
       c.setLogin(testAgent.getIdentifier(), testPass);
-      ClientResponse result = c.sendRequest("GET", mainPath + "/get", "",
-        MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON, new HashMap<String,String>());
+      ClientResponse result = c.sendRequest("POST", mainPath + "/postImg", img.toJSONString(),
+        MediaType.APPLICATION_JSON, MediaType.APPLICATION_JSON, new HashMap<String,String>());
       assertTrue(true); // change here
-      System.out.println("Result of 'testgetImage': " + result.getResponse().trim());
+      System.out.println("Result of 'testPOST': " + result.getResponse().trim());
     } catch (Exception e) {
       e.printStackTrace();
       fail("Exception: " + e);
@@ -114,20 +114,20 @@ public class uatTestImageTest {
 
   /**
    * 
-   * Test for the postImage method.
+   * Test for the existing method.
    * 
    */
   @Test
-  public void testpostImage() {
+  public void testexisting() {
     MiniClient c = new MiniClient();
     c.setAddressPort(HTTP_ADDRESS, HTTP_PORT);
     try {
-      JSONObject payloadPost = new JSONObject();
+
       c.setLogin(testAgent.getIdentifier(), testPass);
-      ClientResponse result = c.sendRequest("POST", mainPath + "/post", payloadPost.toJSONString(),
-        MediaType.APPLICATION_JSON, MediaType.APPLICATION_JSON, new HashMap<String,String>());
+      ClientResponse result = c.sendRequest("GET", mainPath + "/pathToExisting", "",
+        MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON, new HashMap<String,String>());
       assertTrue(true); // change here
-      System.out.println("Result of 'testpostImage': " + result.getResponse().trim());
+      System.out.println("Result of 'testexisting': " + result.getResponse().trim());
     } catch (Exception e) {
       e.printStackTrace();
       fail("Exception: " + e);

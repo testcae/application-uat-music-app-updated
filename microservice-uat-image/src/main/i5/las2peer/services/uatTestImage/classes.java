@@ -6,9 +6,9 @@ import org.json.simple.parser.ParseException;
 
 public class classes {
 
-    class image {
+    class Image {
 
-    public image() {}
+    public Image() {}
     
     private int imageId;
 
