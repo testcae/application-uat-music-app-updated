@@ -10,14 +10,14 @@ public class classes {
 
     public image() {}
     
-    private String imageUrl;
+    private int imageId;
 
-    public void setimageUrl(String setValue) {
-        this.imageUrl = setValue;
+    public void setimageId(int setValue) {
+        this.imageId = setValue;
     }
 
-    public String getimageUrl() {
-        return this.imageUrl;
+    public int getimageId() {
+        return this.imageId;
     }
     private String imageName;
 
@@ -28,31 +28,31 @@ public class classes {
     public String getimageName() {
         return this.imageName;
     }
-    private int imageId;
+    private String imageUrl;
 
-    public void setimageId(int setValue) {
-        this.imageId = setValue;
+    public void setimageUrl(String setValue) {
+        this.imageUrl = setValue;
     }
 
-    public int getimageId() {
-        return this.imageId;
+    public String getimageUrl() {
+        return this.imageUrl;
     }
 
     public JSONObject toJSON() {
 
         JSONObject jo = new JSONObject();
-        jo.put("imageUrl", this.imageUrl); 
-        jo.put("imageName", this.imageName); 
         jo.put("imageId", this.imageId); 
+        jo.put("imageName", this.imageName); 
+        jo.put("imageUrl", this.imageUrl); 
 
         return jo;
     }
 
     public void fromJSON(String jsonString) throws ParseException {
         JSONObject jsonObject = (JSONObject) JSONValue.parseWithException(jsonString);
-        this.imageUrl = (String) jsonObject.get("imageUrl"); 
-        this.imageName = (String) jsonObject.get("imageName"); 
         this.imageId = ((Long) jsonObject.get("imageId")).intValue(); 
+        this.imageName = (String) jsonObject.get("imageName"); 
+        this.imageUrl = (String) jsonObject.get("imageUrl"); 
 
     }
 

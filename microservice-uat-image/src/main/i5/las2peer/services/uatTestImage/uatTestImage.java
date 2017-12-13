@@ -77,9 +77,9 @@ public class uatTestImage extends RESTService {
 
   @Api
   @SwaggerDefinition(
-      info = @Info(title = "uat-image", version = "1",
-          description = "UAT image test",
-          termsOfService = "LICENSE.txt",
+      info = @Info(title = "uat-image", version = "1.1.1",
+          description = "testing widget",
+          termsOfService = "test service",
           contact = @Contact(name = "Melisa Cecilia", email = "CAEAddress@gmail.com") ,
           license = @License(name = "BSD",
               url = "https://github.com/testcae/microservice-uat-image/blob/master/LICENSE.txt") ) )
@@ -90,20 +90,63 @@ public class uatTestImage extends RESTService {
 
       /**
    * 
+   * getImage
+   *
+   * 
+   *
+   * 
+   * @return Response response node
+   * 
+   */
+  @GET
+  @Path("/get")
+  @Produces(MediaType.APPLICATION_JSON)
+  @Consumes(MediaType.TEXT_PLAIN)
+  @ApiResponses(value = {
+       @ApiResponse(code = HttpURLConnection.HTTP_OK, message = "response node")
+  })
+  @ApiOperation(value = "getImage", notes = " ")
+  public Response getImage() {
+
+    try { 
+        Connection conn = service.dbm.getConnection();
+        PreparedStatement query = conn.prepareStatement("SELECT * FROM uatTest.tblImage");
+        ResultSet result = query.executeQuery();
+        JSONArray jsonResult = new JSONArray();
+        while(result.next()) {
+          classes.image imageResult = new classes().new image();
+          imageResult.setimageName(result.getString("imageName"));
+          imageResult.setimageUrl(result.getString("imageUrl"));
+          imageResult.setimageId(result.getInt("imageId"));
+          jsonResult.add(imageResult.toJSON());
+        }
+        // responseGetImage
+        return Response.status(HttpURLConnection.HTTP_OK).entity(jsonResult.toJSONString()).build();
+    } catch(Exception e) {
+      e.printStackTrace();
+      JSONObject result = new JSONObject(); 
+      return Response.status(HttpURLConnection.HTTP_INTERNAL_ERROR).entity(result.toJSONString()).build();
+    }
+
+
+  }
+
+  /**
+   * 
    * postImage
    *
    * 
-   * @param payloadPost Payload post node a JSONObject
+   * @param payloadPost  a JSONObject
    * 
-   * @return Response 
+   * @return Response ImageResponse
    * 
    */
   @POST
   @Path("/post")
-  @Produces(MediaType.TEXT_PLAIN)
+  @Produces(MediaType.APPLICATION_JSON)
   @Consumes(MediaType.TEXT_PLAIN)
   @ApiResponses(value = {
-       @ApiResponse(code = HttpURLConnection.HTTP_OK, message = "responsePost")
+       @ApiResponse(code = HttpURLConnection.HTTP_OK, message = "ImageResponse")
   })
   @ApiOperation(value = "postImage", notes = " ")
   public Response postImage(String payloadPost) {
@@ -136,49 +179,7 @@ public class uatTestImage extends RESTService {
       e.printStackTrace();
       return Response.status(HttpURLConnection.HTTP_INTERNAL_ERROR).entity(0).build();
     }
-  }
 
-  /**
-   * 
-   * getImage
-   *
-   * 
-   *
-   * 
-   * @return Response Response node get
-   * 
-   */
-  @GET
-  @Path("/get")
-  @Produces(MediaType.APPLICATION_JSON)
-  @Consumes(MediaType.TEXT_PLAIN)
-  @ApiResponses(value = {
-       @ApiResponse(code = HttpURLConnection.HTTP_OK, message = "Response node get")
-  })
-  @ApiOperation(value = "getImage", notes = " ")
-  public Response getImage() {
-
-    try { 
-        Connection conn = service.dbm.getConnection();
-        PreparedStatement query = conn.prepareStatement("SELECT * FROM uatTest.tblImage");
-        ResultSet result = query.executeQuery();
-        JSONArray jsonResult = new JSONArray();
-        while(result.next()) {
-          classes.image imageResult = new classes().new image();
-          imageResult.setimageName(result.getString("imageName"));
-          imageResult.setimageUrl(result.getString("imageUrl"));
-          imageResult.setimageId(result.getInt("imageId"));
-          jsonResult.add(imageResult.toJSON());
-        } 
-
-        // responseGetImage
-        return Response.status(HttpURLConnection.HTTP_OK).entity(jsonResult.toJSONString()).build(); 
-
-    } catch(Exception e) {
-      e.printStackTrace();
-      JSONObject result = new JSONObject(); 
-      return Response.status(HttpURLConnection.HTTP_INTERNAL_ERROR).entity(result.toJSONString()).build();
-    }
   }
 
 
