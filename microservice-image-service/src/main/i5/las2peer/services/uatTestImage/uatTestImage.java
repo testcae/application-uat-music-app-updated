@@ -77,9 +77,9 @@ public class uatTestImage extends RESTService {
 
   @Api
   @SwaggerDefinition(
-      info = @Info(title = "image-service", version = "$Metadata_Version$",
-          description = "$Metadata_Description$",
-          termsOfService = "$Metadata_Terms$",
+      info = @Info(title = "image-service", version = "",
+          description = "",
+          termsOfService = "",
           contact = @Contact(name = "Melisa Cecilia", email = "CAEAddress@gmail.com") ,
           license = @License(name = "BSD",
               url = "https://github.com/testcae/microservice-image-service/blob/master/LICENSE.txt") ) )
@@ -95,7 +95,59 @@ public class uatTestImage extends RESTService {
   // //////////////////////////////////////////////////////////////////////////////////////
   // Service methods (for inter service calls)
   // //////////////////////////////////////////////////////////////////////////////////////
-  
+  public String getImage() {
+    final uatTestImage service = (uatTestImage) Context.getCurrent().getService();
+    try { 
+        Connection conn = service.dbm.getConnection();
+        PreparedStatement query = conn.prepareStatement("SELECT * FROM uatTest.tblImage");
+        ResultSet result = query.executeQuery();
+        JSONArray jsonResult = new JSONArray();
+        while(result.next()) {
+          classes.image imageResult = new classes().new image();
+          imageResult.setimageName(result.getString("imageName"));
+          imageResult.setimageUrl(result.getString("imageUrl"));
+          imageResult.setimageId(result.getInt("imageId"));
+          jsonResult.add(imageResult.toJSON());
+        }
+        // responseGetImage
+        return jsonResult.toJSONString();
+    } catch(Exception e) {
+      e.printStackTrace();
+      JSONObject result = new JSONObject(); 
+      return result.toJSONString();
+    }
+  }
+
+  public int postImage(String payloadPostImage) {
+    final uatTestImage service = (uatTestImage) Context.getCurrent().getService();
+    classes.image payloadObject = new classes().new image();
+    try {
+        payloadObject.fromJSON(payloadPostImage);
+    } catch (Exception e) {
+        e.printStackTrace();
+        return 0;
+    }
+
+    try { 
+        Connection conn = service.dbm.getConnection();
+        PreparedStatement query = conn.prepareStatement(
+          "INSERT INTO uatTest.tblImage(imageName, imageUrl) VALUES(?,?) ");
+        query.setString(1, payloadObject.getimageName());
+        query.setString(2, payloadObject.getimageUrl());
+        query.executeUpdate();
+
+        // get id of the new added image
+        ResultSet generatedKeys = query.getGeneratedKeys();
+        if (generatedKeys.next()) {
+          return Math.toIntExact(generatedKeys.getLong(1));
+        } else {
+          return 0;
+        }
+    } catch(Exception e) {
+      e.printStackTrace();
+      return 0;
+    }
+  }
   
 
 }
