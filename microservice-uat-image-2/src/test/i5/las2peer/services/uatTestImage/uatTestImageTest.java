@@ -92,20 +92,20 @@ public class uatTestImageTest {
 
   /**
    * 
-   * Test for the postImage method.
+   * Test for the getImage method.
    * 
    */
   @Test
-  public void testpostImage() {
+  public void testgetImage() {
     MiniClient c = new MiniClient();
     c.setAddressPort(HTTP_ADDRESS, HTTP_PORT);
     try {
-      JSONObject payloadImage = new JSONObject();
+
       c.setLogin(testAgent.getIdentifier(), testPass);
-      ClientResponse result = c.sendRequest("POST", mainPath + "/post", payloadImage.toJSONString(),
-        MediaType.APPLICATION_JSON, MediaType.TEXT_PLAIN, new HashMap<String,String>());
+      ClientResponse result = c.sendRequest("GET", mainPath + "/image", "",
+        MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON, new HashMap<String,String>());
       assertTrue(true); // change here
-      System.out.println("Result of 'testpostImage': " + result.getResponse().trim());
+      System.out.println("Result of 'testgetImage': " + result.getResponse().trim());
     } catch (Exception e) {
       e.printStackTrace();
       fail("Exception: " + e);
@@ -114,20 +114,20 @@ public class uatTestImageTest {
 
   /**
    * 
-   * Test for the mygetter method.
+   * Test for the postImage method.
    * 
    */
   @Test
-  public void testmygetter() {
+  public void testpostImage() {
     MiniClient c = new MiniClient();
     c.setAddressPort(HTTP_ADDRESS, HTTP_PORT);
     try {
-
+      JSONObject imageData = new JSONObject();
       c.setLogin(testAgent.getIdentifier(), testPass);
-      ClientResponse result = c.sendRequest("GET", mainPath + "/getter", "",
-        MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON, new HashMap<String,String>());
+      ClientResponse result = c.sendRequest("POST", mainPath + "/image", imageData.toJSONString(),
+        MediaType.APPLICATION_JSON, MediaType.APPLICATION_JSON, new HashMap<String,String>());
       assertTrue(true); // change here
-      System.out.println("Result of 'testmygetter': " + result.getResponse().trim());
+      System.out.println("Result of 'testpostImage': " + result.getResponse().trim());
     } catch (Exception e) {
       e.printStackTrace();
       fail("Exception: " + e);
